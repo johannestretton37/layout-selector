@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { AppExtensionSDK } from '@contentful/app-sdk';
-import { Heading, Form, Workbench, Paragraph } from '@contentful/forma-36-react-components';
+import {
+  Heading,
+  Form,
+  Workbench,
+  Paragraph,
+} from '@contentful/forma-36-react-components';
 import { css } from 'emotion';
 
 export interface AppInstallationParameters {}
@@ -27,7 +32,8 @@ export default class Config extends Component<ConfigProps, ConfigState> {
   async componentDidMount() {
     // Get current parameters of the app.
     // If the app is not installed yet, `parameters` will be `null`.
-    const parameters: AppInstallationParameters | null = await this.props.sdk.app.getParameters();
+    const parameters: AppInstallationParameters | null =
+      await this.props.sdk.app.getParameters();
 
     this.setState(parameters ? { parameters } : this.state, () => {
       // Once preparation has finished, call `setReady` to hide
@@ -59,7 +65,9 @@ export default class Config extends Component<ConfigProps, ConfigState> {
       <Workbench className={css({ margin: '80px' })}>
         <Form>
           <Heading>App Config</Heading>
-          <Paragraph>Welcome to your contentful app. This is your config page.</Paragraph>
+          <Paragraph>
+            Welcome to your contentful app. This is your config page.
+          </Paragraph>
         </Form>
       </Workbench>
     );

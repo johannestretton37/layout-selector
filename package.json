@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@contentful/app-sdk": "^3.34.3",
+    "@contentful/default-field-editors": "^0.8.16",
+    "@contentful/field-editor-dropdown": "^0.13.1",
     "@contentful/field-editor-single-line": "^0.14.1",
     "@contentful/field-editor-test-utils": "^0.11.1",
     "@contentful/forma-36-fcss": "^0.3.2",
