@@ -17,21 +17,22 @@ interface EditorProps {
   sdk: EditorExtensionSDK;
 }
 
-type Layout = 'Cards' | 'ExpandableCards' | 'Showcase';
+type Layout = 'Cards' | 'Expandable cards' | 'Showcase';
 
-const commonFields = [
-  'layout',
-  'heading',
-  'headingSize',
-  'headingAlignment',
-  'theme',
-  'cards',
-];
+const commonFields = ['layout', 'theme', 'cards'];
+
+const headingFields = ['heading', 'headingSize', 'headingAlignment'];
 
 const fieldsForLayout: { [key in Layout]: string[] } = {
-  Cards: [...commonFields],
-  ExpandableCards: [...commonFields],
-  Showcase: [...commonFields, 'backgroundImage', 'backgroundColor', 'CTA'],
+  Cards: [...commonFields, ...headingFields],
+  'Expandable cards': [...commonFields],
+  Showcase: [
+    ...commonFields,
+    ...headingFields,
+    'backgroundImage',
+    'backgroundColor',
+    'CTA',
+  ],
 };
 
 function visibleFieldKeysFor(contentType: ContentType, layout: Layout) {
@@ -67,28 +68,29 @@ const Entry = (props: EditorProps) => {
       {visibleFields.map((field) => {
         return (
           <div
+            key={field.id}
             style={
               field.id === 'layout'
                 ? {
                     padding: `${tokens.spacingM} 0 1px`,
                     background: tokens.colorElementLightest,
-                    borderBottom: `1px solid ${tokens.colorElementDark}`,
+                    borderBottom: `1px solid ${tokens.colorElementMid}`,
                   }
                 : undefined
             }>
             <Field
-              key={field.id}
               field={field as unknown as FieldAPI}
               sdk={props.sdk as FieldExtensionSDK}
             />
             <Typography
               style={{ padding: `${tokens.spacing2Xs} ${tokens.spacingXl}` }}>
-              {props.sdk.entry.fields.layout.getValue() && (
-                <Paragraph>
-                  We could have a preview or a short description for the "
-                  {props.sdk.entry.fields.layout.getValue()}" layout here...
-                </Paragraph>
-              )}
+              {field.id === 'layout' &&
+                props.sdk.entry.fields.layout.getValue() && (
+                  <Paragraph>
+                    We could have a preview or a short description for the "
+                    {props.sdk.entry.fields.layout.getValue()}" layout here...
+                  </Paragraph>
+                )}
             </Typography>
           </div>
         );
