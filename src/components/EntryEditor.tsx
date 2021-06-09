@@ -35,7 +35,7 @@ const fieldsForLayout: { [key in Layout]: string[] } = {
 };
 
 function visibleFieldKeysFor(contentType: ContentType, layout: Layout) {
-  if (contentType.name !== 'CardsModule') {
+  if (contentType.sys.id !== 'cardsModule') {
     throw new Error('This Entry Editor is only configured for CardsModule');
   }
   if (layout === undefined) {
