@@ -8,8 +8,6 @@ import {
   Note,
 } from '@contentful/forma-36-react-components';
 import { FieldAPI, FieldExtensionSDK } from '@contentful/app-sdk';
-import { SingleLineEditor } from '@contentful/field-editor-single-line';
-import { DropdownEditor } from '@contentful/field-editor-dropdown';
 import {
   Field as DefaultField,
   FieldWrapper as DefaultFieldWrapper,

@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import {
-  AppExtensionSDK,
-  FieldExtensionSDK,
-  SidebarExtensionSDK,
-  DialogExtensionSDK,
+  // AppExtensionSDK,
+  // FieldExtensionSDK,
+  // SidebarExtensionSDK,
+  // DialogExtensionSDK,
   EditorExtensionSDK,
-  PageExtensionSDK,
+  // PageExtensionSDK,
   init,
   locations,
 } from '@contentful/app-sdk';
@@ -16,12 +16,12 @@ import '@contentful/forma-36-fcss/dist/styles.css';
 import '@contentful/forma-36-tokens/dist/css/index.css';
 import './index.css';
 
-import Config from './components/ConfigScreen';
+// import Config from './components/ConfigScreen';
 import EntryEditor from './components/EntryEditor';
-import Page from './components/Page';
-import Sidebar from './components/Sidebar';
-import Field from './components/Field';
-import Dialog from './components/Dialog';
+// import Page from './components/Page';
+// import Sidebar from './components/Sidebar';
+// import Field from './components/Field';
+// import Dialog from './components/Dialog';
 
 import LocalhostWarning from './components/LocalhostWarning';
 

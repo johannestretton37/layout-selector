@@ -1,10 +1,5 @@
-import React, { SetStateAction } from 'react';
-import {
-  Paragraph,
-  Heading,
-  Typography,
-  TextLink,
-} from '@contentful/forma-36-react-components';
+import React from 'react';
+import { Paragraph, Typography } from '@contentful/forma-36-react-components';
 import {
   EditorExtensionSDK,
   FieldAPI,
