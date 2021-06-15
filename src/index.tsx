@@ -33,9 +33,6 @@ if (process.env.NODE_ENV === 'development' && window.self === window.top) {
   init((sdk) => {
     const root = document.getElementById('root');
 
-    console.log('------ APP CONFIG PARAMETERS -------');
-    console.log(sdk.parameters);
-    console.log(sdk.parameters.installation);
     const { fieldsConfig } = sdk.parameters.installation as any;
 
     // All possible locations for your app
