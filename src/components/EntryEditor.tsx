@@ -13,40 +13,36 @@ import { EntryAPI } from '@contentful/app-sdk';
 import { ContentType } from '@contentful/app-sdk';
 import tokens from '@contentful/forma-36-tokens';
 
-interface EditorProps {
-  sdk: EditorExtensionSDK;
+interface LayoutConfig {
+  [key: string]: string[];
 }
 
-type Layout = 'Cards' | 'Expandable cards' | 'Showcase';
+export interface FieldsConfig {
+  [key: string]: LayoutConfig;
+}
 
-const commonFields = ['layout', 'theme', 'cards'];
+interface EditorProps {
+  sdk: EditorExtensionSDK;
+  fieldsConfig: FieldsConfig;
+}
 
-const headingFields = ['heading', 'headingSize', 'headingAlignment'];
-
-const fieldsForLayout: { [key in Layout]: string[] } = {
-  Cards: [...commonFields, ...headingFields],
-  'Expandable cards': [...commonFields],
-  Showcase: [
-    ...commonFields,
-    ...headingFields,
-    'backgroundImage',
-    'backgroundColor',
-    'CTA',
-  ],
-};
-
-function visibleFieldKeysFor(contentType: ContentType, layout: Layout) {
-  if (contentType.sys.id !== 'cardsModule') {
-    throw new Error('This Entry Editor is only configured for CardsModule');
-  }
+function visibleFieldKeysFor(
+  contentType: ContentType,
+  layout: string,
+  config: FieldsConfig
+) {
   if (layout === undefined) {
     return ['layout'];
   }
-  if (!fieldsForLayout[layout]) {
+  if (!config[contentType.sys.id][layout]) {
+    console.log(config);
     throw new Error(`The "${layout}" layout is not implemented yet`);
   }
   const allFields = contentType.fields.map((field) => field.id);
-  return allFields.filter((f: string) => fieldsForLayout[layout].includes(f));
+  return allFields.filter(
+    (f: string) =>
+      f === 'layout' || config[contentType.sys.id][layout].includes(f)
+  );
 }
 
 function getFieldsForKeys(entry: EntryAPI, keys: string[]) {
@@ -57,11 +53,15 @@ const Entry = (props: EditorProps) => {
   const [visibleFields, setVisibleFields] = useState<EntryFieldAPI[]>([]);
 
   useEffect(() => {
-    return props.sdk.entry.fields.layout.onValueChanged((layout: Layout) => {
-      const fieldKeys = visibleFieldKeysFor(props.sdk.contentType, layout);
+    return props.sdk.entry.fields.layout.onValueChanged((layout: string) => {
+      const fieldKeys = visibleFieldKeysFor(
+        props.sdk.contentType,
+        layout,
+        props.fieldsConfig
+      );
       setVisibleFields(getFieldsForKeys(props.sdk.entry, fieldKeys));
     });
-  }, [props.sdk]);
+  }, [props.sdk, props.fieldsConfig]);
 
   return (
     <>

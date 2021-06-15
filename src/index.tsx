@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import {
-  // AppExtensionSDK,
+  AppExtensionSDK,
   // FieldExtensionSDK,
   // SidebarExtensionSDK,
   // DialogExtensionSDK,
@@ -16,7 +16,7 @@ import '@contentful/forma-36-fcss/dist/styles.css';
 import '@contentful/forma-36-tokens/dist/css/index.css';
 import './index.css';
 
-// import Config from './components/ConfigScreen';
+import Config from './components/ConfigScreen';
 import EntryEditor from './components/EntryEditor';
 // import Page from './components/Page';
 // import Sidebar from './components/Sidebar';
@@ -33,21 +33,31 @@ if (process.env.NODE_ENV === 'development' && window.self === window.top) {
   init((sdk) => {
     const root = document.getElementById('root');
 
+    console.log('------ APP CONFIG PARAMETERS -------');
+    console.log(sdk.parameters);
+    console.log(sdk.parameters.installation);
+    const { fieldsConfig } = sdk.parameters.installation as any;
+
     // All possible locations for your app
     // Feel free to remove unused locations
     // Dont forget to delete the file too :)
     const ComponentLocationSettings = [
-      // {
-      //   location: locations.LOCATION_APP_CONFIG,
-      //   component: <Config sdk={sdk as AppExtensionSDK} />,
-      // },
+      {
+        location: locations.LOCATION_APP_CONFIG,
+        component: <Config sdk={sdk as AppExtensionSDK} />,
+      },
       // {
       //   location: locations.LOCATION_ENTRY_FIELD,
       //   component: <Field sdk={sdk as FieldExtensionSDK} />,
       // },
       {
         location: locations.LOCATION_ENTRY_EDITOR,
-        component: <EntryEditor sdk={sdk as EditorExtensionSDK} />,
+        component: (
+          <EntryEditor
+            sdk={sdk as EditorExtensionSDK}
+            fieldsConfig={fieldsConfig}
+          />
+        ),
       },
       // {
       //   location: locations.LOCATION_DIALOG,
