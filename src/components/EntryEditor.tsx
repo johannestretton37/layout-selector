@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paragraph, Typography } from '@contentful/forma-36-react-components';
+// import { Paragraph, Typography } from '@contentful/forma-36-react-components';
 import {
   EditorExtensionSDK,
   FieldAPI,
@@ -39,10 +39,10 @@ function visibleFieldKeysFor(
     throw new Error(`The "${layout}" layout is not implemented yet`);
   }
   const allFields = contentType.fields.map((field) => field.id);
-  return allFields.filter(
-    (f: string) =>
-      f === 'layout' || config[contentType.sys.id][layout].includes(f)
+  const visibleFields = allFields.filter((f: string) =>
+    config[contentType.sys.id][layout].includes(f)
   );
+  return ['layout', ...visibleFields];
 }
 
 function getFieldsForKeys(entry: EntryAPI, keys: string[]) {
@@ -82,7 +82,7 @@ const Entry = (props: EditorProps) => {
               field={field as unknown as FieldAPI}
               sdk={props.sdk as FieldExtensionSDK}
             />
-            <Typography
+            {/* <Typography
               style={{ padding: `${tokens.spacing2Xs} ${tokens.spacingXl}` }}>
               {field.id === 'layout' &&
                 props.sdk.entry.fields.layout.getValue() && (
@@ -91,7 +91,7 @@ const Entry = (props: EditorProps) => {
                     {props.sdk.entry.fields.layout.getValue()}" layout here...
                   </Paragraph>
                 )}
-            </Typography>
+            </Typography> */}
           </div>
         );
       })}
