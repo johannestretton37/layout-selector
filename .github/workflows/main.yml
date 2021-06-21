@@ -6,9 +6,11 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
-  # pull_request:
-  #  branches: [ main ]
+    branches:
+      - 'main'
+  # Triggers when one or more files changed inside this folder
+  #  paths:
+  #    - 'layout-selector/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -50,9 +52,15 @@ jobs:
       with:
         name: production-files
         path: ./build
+        # path: ./build/layout-selector
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build
+        # Do we need this?    vvvvvvvvvvvvvvvv
+        # publish_dir: ./build/layout-selector
+
+        # https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-deploy-to-subdirectory-destination_dir
+        # destination_dir: ./layout-selector
